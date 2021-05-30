@@ -3,23 +3,24 @@ import glob
 import tarfile
 import subprocess
 
-directory = "/home/shivam/Desktop/myExtracted Paper Folders/"
-count = 0
+# Step 1: Removing folders containing no .tex files within them
 
-# Removing folders containing no .tex files within them
+directory = "/home/shivam/Desktop/myExtracted Paper Folders/"
+total_removed = 0
+
 for i in os.listdir(directory):
     filelist = glob.glob(directory + "/" + i + "/" + "/*.tex")
     if(len(filelist)) == 0:
         subprocess.call(['rm','-r', directory + "/" + i + "/"])
-        count = count + 1   
-    print("Count = ",count)      
-print("Count = ", count)
+        total_removed = total_removed + 1       
+print("Total Removed after Step 1 = ", total_removed)
 
-directory = "/home/shivam/Desktop/myExtracted Paper Folders/"
+
+# Step 2: Removing folders (having .tex files) containing no tables withing them
+
 total_removed = 0
 run_count = 1
 
-# Removing folders (having .tex files) containing no tables withing them
 for i in os.listdir(directory):
     print(i)
     print("Run Count = ",run_count)
@@ -57,13 +58,13 @@ for i in os.listdir(directory):
         subprocess.call(['rm','-r', directory + "/" + i + "/"])
         total_removed = total_removed + 1
 
-print("Total Removed = ", total_removed)
+print("Total Removed after Step 2 = ", total_removed)
 
-directory = "/home/shivam/Desktop/myExtracted Paper Folders/"
+# Step 3: Removing folders having: i) multiple .tex files with '\documentclass', and ii) no .tex files with '\documentclass'
+
 total_removed = 0
 run_count = 1
 
-# Removing folders having: i) multiple .tex files with '\documentclass', and ii) no .tex files with '\documentclass'
 for i in os.listdir(directory):
     print(i)
     print("Run Count = ",run_count)
@@ -86,4 +87,4 @@ for i in os.listdir(directory):
         subprocess.call(['rm','-r', directory + "/" + i + "/"])
         total_removed = total_removed + 1
         
-print("Total Removed = ", total_removed)    
+print("Total Removed after step 3 = ", total_removed)    
